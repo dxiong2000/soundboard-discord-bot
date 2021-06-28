@@ -97,6 +97,7 @@ async def on_message(message):
     """
     Parses commands sent to bot
     https://discordpy.readthedocs.io/en/stable/api.html#voice-related
+    
     Args:
         message (Message): Discord API Message object (https://discordpy.readthedocs.io/en/stable/api.html#message)
     """
@@ -140,6 +141,7 @@ async def on_message(message):
             await message.channel.send(f'{user.mention}\n', embed=getErrorEmbed('Wrong usage of !play.\nCorrect usage: !play <clip name>.'))
             return
     elif msg.startswith('!add'): # feature to add new clips
+        # https://discordpy.readthedocs.io/en/stable/api.html#attachment
         msg = msg[4:]
         if len(msg) == 0 and len(message.attachments) == 1:
             if message.attachments[0].filename[-4:] == '.mp3':
