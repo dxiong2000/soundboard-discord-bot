@@ -12,10 +12,9 @@ intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
 
-
 def getErrorEmbed(desc):
     """
-    Generates a Discord error embedded message
+    Generates a error embedded message
 
     Args:
         desc (str): String for error message
@@ -33,7 +32,7 @@ def getErrorEmbed(desc):
 
 def getHelpEmbed():
     """
-    Generates a Discord help embedded message
+    Generates a help embedded message
 
     Returns:
         Embed: Help embed
@@ -47,6 +46,15 @@ def getHelpEmbed():
     return embed
 
 def getListEmbed(file_list):
+    """
+    Generates an embedded message containing a list of sound files
+
+    Args:
+        file_list ([str]): list of sound file names
+
+    Returns:
+        Embed: embedded message
+    """
     embed = discord.Embed(
         title = 'Sound Clips',
         colour = discord.Colour.green()
@@ -106,11 +114,11 @@ async def on_message(message):
         else:
             await message.channel.send(f'{user.mention}\n', embed=getErrorEmbed('Wrong usage of !play.\nCorrect usage: !play <clip name>.'))
             return
-    elif msg.startswith('!list'):
+    elif msg.startswith('!list'): # print a list of sound files
         file_list = os.listdir('./clips/')
         await message.channel.send(f'{user.mention}\n', embed=getListEmbed(file_list))
         return
-    elif msg.startswith('!help'):
+    elif msg.startswith('!help'): # help menu
         await message.channel.send(f'{user.mention}\n', embed=getHelpEmbed())
         return
         
