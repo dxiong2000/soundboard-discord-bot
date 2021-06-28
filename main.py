@@ -14,6 +14,12 @@ client = discord.Client(intents=intents)
 file_list = []
 
 def getFileList():
+    """
+    Gets list of names of sound files
+    
+    Returns:
+        [str]: names of sound files
+    """
     return os.listdir('./clips/')
 
 def getErrorEmbed(desc):
@@ -96,7 +102,6 @@ async def on_ready():
 async def on_message(message):
     """
     Parses commands sent to bot
-    https://discordpy.readthedocs.io/en/stable/api.html#voice-related
     
     Args:
         message (Message): Discord API Message object (https://discordpy.readthedocs.io/en/stable/api.html#message)
@@ -125,9 +130,12 @@ async def on_message(message):
 
             try:
                 if soundclip_file in getFileList():
+                    # https://discordpy.readthedocs.io/en/stable/api.html#voice-related
+                    
                     voice = await channel.connect()
                     voice.play(discord.FFmpegPCMAudio(executable="C:/FFmpeg/ffmpeg/ffmpeg.exe", source=f'./clips/{soundclip_file}'), after=lambda e: print(f'Played {soundclip_file}', e))
-                    while voice.is_playing():
+                   
+                    while voice.is_playing(): # while the sound clip is still playing, dont leave the voice channel
                         pass
                     await voice.disconnect()
                     voice.cleanup()
@@ -142,14 +150,22 @@ async def on_message(message):
             return
     elif msg.startswith('!add'): # feature to add new clips
         # https://discordpy.readthedocs.io/en/stable/api.html#attachment
+        
         msg = msg[4:]
-        if len(msg) == 0 and len(message.attachments) == 1:
-            if message.attachments[0].filename[-4:] == '.mp3':
+        
+        if len(msg) == 0 and len(message.attachments) == 1: # make sure there is an attachment with the message
+            if message.attachments[0].filename[-4:] == '.mp3': # only .mp3 files
                 if message.attachments[0].filename in getFileList():
                     await message.channel.send(f'{user.mention}\n', embed=getErrorEmbed('File name already in use. Change the file name and try again.'))
                     return
+                
                 file = message.attachments[0]
-                await file.save(fp=f'./clips/{message.attachments[0].filename}')
+                
+                try:
+                    await file.save(fp=f'./clips/{message.attachments[0].filename}')
+                except:
+                    await message.channel.send(f'{user.mention}\n', embed=getErrorEmbed('File upload failed, please try again.'))
+                    return
                 
                 await message.channel.send(f'{user.mention}\n', embed=getAddSuccessEmbed(message.attachments[0].filename[:-4]))
                 return
