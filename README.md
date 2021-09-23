@@ -18,5 +18,7 @@ remember to save added mp3 files
 https://tmuxcheatsheet.com
 
 TODO:
+
 unique ./clips/serverID directory for storing clips per server
+
 admin only !delete clip feature
