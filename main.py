@@ -1,5 +1,7 @@
 import discord
 import os
+import ctypes
+import ctypes.util
 
 # gets secret key
 bot_token = ''
@@ -10,7 +12,9 @@ with open('./secret.txt', 'r') as secret:
 # sets up bot
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
-
+a = ctypes.util.find_library('opus')
+b = discord.opus.load_opus(a)
+print(discord.opus.is_loaded())
 
 def getFileList():
     """
