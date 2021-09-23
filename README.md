@@ -9,3 +9,10 @@
 - Play soundboard clips with !play [clip name]
 - Add new clips using !add
 - List all available clips with !list
+
+### note to self
+use `tmux a -t bot` to attach to bot session in ec2
+
+remember to save added mp3 files
+
+https://tmuxcheatsheet.com
