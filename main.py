@@ -11,7 +11,6 @@ with open('./secret.txt', 'r') as secret:
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
-file_list = []
 
 def getFileList():
     """
@@ -133,14 +132,14 @@ async def on_message(message):
                     # https://discordpy.readthedocs.io/en/stable/api.html#voice-related
                     
                     voice = await channel.connect()
-                    voice.play(discord.FFmpegPCMAudio(executable="C:/FFmpeg/ffmpeg/ffmpeg.exe", source=f'./clips/{soundclip_file}'), after=lambda e: print(f'Played {soundclip_file}', e))
+                    voice.play(discord.FFmpegPCMAudio(executable="C:/FFmpeg/ffmpeg/ffmpeg.exe", source=f'./clips/{soundclip_file}'), after=lambda e: print(f'Played {soundclip_file} in channel {channel.name}', e))
                    
                     while voice.is_playing(): # while the sound clip is still playing, dont leave the voice channel
                         pass
                     await voice.disconnect()
                     voice.cleanup()
                 else:
-                    await message.channel.send(f'{user.mention}\n', embed=getErrorEmbed(f'The clip "{soundclip_name}" does not exist. Use !list to see available sound clips.'))
+                    await message.channel.send(f'{user.mention}\n', embed=getErrorEmbed(f'The clip "{soundclip_name}" does not exist.\nUse !list to see available sound clips.'))
                     return
             except discord.errors.ClientException:
                 print("Bot is already in a voice channel.")
