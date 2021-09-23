@@ -17,6 +17,8 @@ remember to save added mp3 files
 
 https://tmuxcheatsheet.com
 
+install ffmpeg in ec2 instance: https://maskaravivek.medium.com/how-to-install-ffmpeg-on-ec2-running-amazon-linux-451e4a8e2694
+
 ### TODO:
 
 unique ./clips/serverID directory for storing clips per server
