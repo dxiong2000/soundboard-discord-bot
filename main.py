@@ -1,5 +1,7 @@
 import discord
 import os
+import ctypes
+import ctypes.util
 
 # gets secret key
 bot_token = ''
@@ -10,6 +12,10 @@ with open('./secret.txt', 'r') as secret:
 # sets up bot
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
+a = ctypes.util.find_library('opus')
+b = discord.opus.load_opus(a)
+print(discord.opus.is_loaded())
+
 
 
 def getFileList():
@@ -132,7 +138,7 @@ async def on_message(message):
                     # https://discordpy.readthedocs.io/en/stable/api.html#voice-related
                     
                     voice = await channel.connect()
-                    voice.play(discord.FFmpegPCMAudio(executable="C:/FFmpeg/ffmpeg/ffmpeg.exe", source=f'./clips/{soundclip_file}'), after=lambda e: print(f'Played {soundclip_file} in channel {channel.name}', e))
+                    voice.play(discord.FFmpegPCMAudio(executable="./ffmpeg/ffmpeg-4.4-amd64-static/ffmpeg", source=f'./clips/{soundclip_file}'), after=lambda e: print(f'Played {soundclip_file} in channel {channel.name}', e))
                    
                     while voice.is_playing(): # while the sound clip is still playing, dont leave the voice channel
                         pass
