@@ -9,3 +9,18 @@
 - Play soundboard clips with !play [clip name]
 - Add new clips using !add
 - List all available clips with !list
+
+### note to self
+use `tmux a -t bot` to attach to bot session in ec2
+
+remember to save added mp3 files
+
+https://tmuxcheatsheet.com
+
+install ffmpeg in ec2 instance: https://maskaravivek.medium.com/how-to-install-ffmpeg-on-ec2-running-amazon-linux-451e4a8e2694
+
+### TODO:
+
+unique ./clips/serverID directory for storing clips per server
+
+admin only !delete clip feature
